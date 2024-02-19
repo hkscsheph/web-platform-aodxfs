@@ -19,13 +19,26 @@
     <main>
       <h1>Home page</h1>
       <form
-        method="get"
-        action="https://script.google.com/macros/s/AKfycbyI_nGs0CMk46iN6gGfYxlda_wpsGn3JdLWUKLS55idzAyrNWXPKTfg7zLYRCwtUThO6A/exec"
+        id="formId"
       >
-        text: <input type="text" name="a" /><br />
-        password: <input type="password" name="b" /><br />
+        text: <input type="text" name="a" id="textId"/><br />
+        password: <input type="password" name="b" id="passwordId" /><br />
         <input type="submit" />
       </form>
     </main>
+    <script>
+      document.getElementById('formId').addEventListener('submit', async e => {
+        e.preventDefault()
+        
+        const text = document.getElementById('textId').value
+        const password = document.getElementById('passwordId').value
+        document.getElementById('formId').innerText = "Loading..."
+        
+        const res = await fetch(`https://script.google.com/macros/s/AKfycbyI_nGs0CMk46iN6gGfYxlda_wpsGn3JdLWUKLS55idzAyrNWXPKTfg7zLYRCwtUThO6A/exec`
+          +`?a=${text}&b=${password}`)
+        const resText = await res.text()
+        document.getElementById('formId').innerText = resText
+      })
+    </script>
   </body>
 </html>
